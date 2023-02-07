@@ -1,15 +1,17 @@
 import { getPokemon } from './data/data.js'
 import UI from './models/UI.js'
 
+let actualPokemon
+
 document.addEventListener('DOMContentLoaded', async () => {
-  await getAllPokemons(new UI())
+  const ui = new UI()
+  await getAllPokemons(ui)
   const nav = document.querySelectorAll('.list span')
 
   nav.forEach(span => {
     span.addEventListener('click', async () => {
-      const id = span.id
-      const pokemon = await getPokemon(id)
-      console.log(pokemon)
+      actualPokemon = await getPokemon(span.id)
+      ui.showPicture(actualPokemon.img, actualPokemon.name)
     })
   })
 })
@@ -27,7 +29,6 @@ async function getAllPokemons (ui) {
 }
 
 async function renderPokemon (ui) {
-  const pokemon = await getPokemon(1)
 }
 
 function main () {

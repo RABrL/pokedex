@@ -1,8 +1,5 @@
 // @ts-check
 export default class Pokemon {
-  questionIndex = 0
-  score = 0
-
   /**
    *
    * @param {number} id Id number of pokemon
@@ -24,8 +21,6 @@ export default class Pokemon {
     this.abilities = abilities
     this.img = img
   }
-
-  
 
   /**
    *
