@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokedex powered by pokeapi</title>
+  <!-- IMPORT GOOGLE ICONS  -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+  <!-- IMPORT CUSTOM STYLES -->
+  <link rel="stylesheet" href="./styles/style.css">
+</head>
+
+<body>
+  <div class="app">
+    <!-- START CREDITS -->
+    <div class="credits">
+      <a class="github" href="https://github.com/RABrL">
+        <ion-icon name="logo-github"></ion-icon>
+      </a>
+      <a class="linkedin" href="https://www.linkedin.com/in/robinson-brito-026baa24b/">
+        <ion-icon name="logo-linkedin"></ion-icon>
+      </a>
+      <div class="line"></div>
+    </div>
+    <!-- END CREDITS -->
+    <div class="container">
+      <div class="number">#001</div>
+      <div class="loading">
+        <svg width="50" height="50" viewBox="0 0 75 75" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path opacity="0.5"
+            d="M37.5001 0.416656C30.1657 0.416656 22.996 2.59156 16.8977 6.66633C10.7994 10.7411 6.04632 16.5327 3.23957 23.3088C0.432816 30.0849 -0.301558 37.5411 1.12931 44.7346C2.56018 51.928 6.09202 58.5357 11.2782 63.7219C16.4644 68.9081 23.072 72.4399 30.2655 73.8708C37.459 75.3016 44.9152 74.5673 51.6913 71.7605C58.4674 68.9538 64.259 64.2007 68.3338 58.1024C72.4085 52.0041 74.5834 44.8344 74.5834 37.5C74.5834 32.6301 73.6242 27.808 71.7606 23.3088C69.897 18.8097 67.1655 14.7216 63.722 11.2781C60.2785 7.83461 56.1904 5.10307 51.6913 3.23946C47.1921 1.37585 42.37 0.416656 37.5001 0.416656V0.416656ZM37.5001 67.1667C31.6326 67.1667 25.8968 65.4267 21.0182 62.1669C16.1395 58.9071 12.3371 54.2738 10.0917 48.8529C7.84627 43.4321 7.25877 37.4671 8.40347 31.7123C9.54816 25.9575 12.3736 20.6714 16.5226 16.5225C20.6716 12.3735 25.9576 9.54806 31.7124 8.40336C37.4672 7.25867 43.4322 7.84616 48.853 10.0916C54.2739 12.337 58.9072 16.1394 62.167 21.0181C65.4268 25.8967 67.1668 31.6325 67.1668 37.5C67.1668 45.3681 64.0412 52.9139 58.4776 58.4775C52.914 64.0411 45.3682 67.1667 37.5001 67.1667V67.1667Z"
+            fill="white" />
+          <path
+            d="M67.1667 37.5H74.5833C74.5833 32.6301 73.6241 27.808 71.7605 23.3088C69.8969 18.8097 67.1654 14.7216 63.7219 11.2781C60.2784 7.83461 56.1903 5.10307 51.6912 3.23946C47.192 1.37585 42.3699 0.416656 37.5 0.416656V7.83332C45.3681 7.83332 52.9139 10.9589 58.4775 16.5225C64.0411 22.0861 67.1667 29.6319 67.1667 37.5Z"
+            fill="white" />
+
+          <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="2s"
+            repeatCount="indefinite" />
+        </svg>
+      </div>
+      <ion-icon name="chevron-back" class="back"></ion-icon>
+      <ion-icon name="chevron-forward" class="next"></ion-icon>
+      <!-- END ARROWS -->
+      <header class="top">
+        <div class="input-box">
+          <input type="search" placeholder="Search here" list="pokemons">
+          <datalist id="pokemons">
+          </datalist>
+          <ion-icon name="search"></ion-icon>
+          <ion-icon name="shuffle"></ion-icon>
+        </div>
+        <div class="filter">
+          Filter
+          <ion-icon name="chevron-down"></ion-icon>
+        </div>
+      </header>
+      <!-- END HEADER -->
+      <div class="nav">
+        <nav class="list" id="nav-list">
+        </nav>
+      </div>
+      <main class="content">
+          <div class="title">
+
+            <div class="subgrid">
+              <div class="emoji">
+                <img id="emoji">
+              </div>
+              <div class="type">Grass</div>
+              <div class="name">Bulbasaur</div>
+              <div class="desc">It has a preference for hot things. When it rains, steam is said to spout from the tip of its tail.</div>
+              <div class="details">
+                <div class="row">
+                  <span>Height</span>
+                  <span>0.7M</span>
+                </div>
+                <div class="row">
+                  <span>Weight</span>
+                  <span>6.9KG</span>
+                </div>
+                <div class="row">
+                  <span>Abilities</span>
+                  <span>Overgrow</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="picture">
+              <img id="picture">
+            </div>
+
+          </div>
+
+          <div class="stats">
+
+            <div class="title">Stats</div>
+
+            <div class="graphic">
+              <div class="row">
+                <div class="name">Hp</div>
+                <div class="bar">
+                  <div class="inside"></div>
+                </div>
+                <div class="base">50</div>
+              </div>
+              <div class="row">
+                <div class="name">Attack</div>
+                <div class="bar">
+                  <div class="inside"></div>
+                </div>
+                <div class="base">50</div>
+              </div>
+              <div class="row">
+                <div class="name">Defense</div>
+                <div class="bar">
+                  <div class="inside"></div>
+                </div>
+                <div class="base">50</div>
+              </div>
+              <div class="row">
+                <div class="name">Special Attack</div>
+                <div class="bar">
+                  <div class="inside"></div>
+                </div>
+                <div class="base">50</div>
+              </div>
+              <div class="row">
+                <div class="name">Special Defense</div>
+                <div class="bar">
+                  <div class="inside"></div>
+                </div>
+                <div class="base">50</div>
+              </div>
+              <div class="row">
+                <div class="name">Speed</div>
+                <div class="bar">
+                  <div class="inside"></div>
+                </div>
+                <div class="base">50</div>
+              </div>
+            </div>
+
+          </div>
+      </main>
+      <!-- END CONTENT -->
+    </div>
+    <!-- END CONTAINER -->
+  </div>
+  <!-- END APP -->
+  <!-- SCRIPT IONICS -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <!-- SCRIPT JS -->
+  <script src="app.js" type="module"></script>
+</body>
+
+</html>
