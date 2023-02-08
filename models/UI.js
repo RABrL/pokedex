@@ -1,16 +1,17 @@
+import Pokemon from './Pokemon.js'
+
 export default class UI {
   constructor () {}
 
   /**
    *
-   * @param {Object[]} pokemons Array of objects with pokemons
+   * @param {string[]} pokemons Array of all name's pokemons
    */
   fillNav (pokemons) {
     const nav = document.getElementById('nav-list')
-    pokemons.forEach(({ name, id }) => {
+    pokemons.forEach(name => {
       const span = document.createElement('span')
       span.classList.add('element')
-      span.setAttribute('id', id + 1)
       const div = document.createElement('div')
       div.innerText = name
       span.appendChild(div)
@@ -20,10 +21,9 @@ export default class UI {
 
   fillInput (pokemons) {
     const dataList = document.getElementById('pokemons')
-    pokemons.forEach(({ name, id }) => {
+    pokemons.forEach(name => {
       const opt = document.createElement('option')
       opt.setAttribute('value', name)
-      opt.dataset.pokemonId = id + 1
       dataList.appendChild(opt)
     })
   }
@@ -35,7 +35,7 @@ export default class UI {
    */
   showPicture (imgUrl, name) {
     const img = document.getElementById('picture')
-    img.src = imgUrl
+    img.src = imgUrl ?? './assets/notfound.svg'
     img.alt = name
   }
 
@@ -52,56 +52,88 @@ export default class UI {
 
   /**
    *
-   * @param {string[]} choices All choices for the actual question
-   * @param {function} callback function to execute if a button is clicked
+   * @param {Pokemon} pokemon Object type pokemon
    */
-  showSubGrid (choices, callback) {
-    const containerChoices = document.getElementById('choices')
-    this.cleanElement(containerChoices)
-    choices.forEach(choice => {
-      const button = document.createElement('button')
-      button.setAttribute('class', 'button')
-      button.innerText = choice
-      button.addEventListener('click', () => callback(choice))
+  showSubGrid (pokemon) {
+    const $ = selector => document.querySelector(selector)
+    const [mainType, secondType] = pokemon.types
 
-      containerChoices.appendChild(button)
-    })
+    this.showEmoji(mainType)
+    $('.type').innerHTML = `${mainType}${secondType ? ' - <small>' + secondType + '</small>' : ''}`
+    $('.name').innerText = pokemon.name.replaceAll('-', ' ')
+    $('.details').children[0].lastElementChild.innerText = pokemon.height + 'M'
+    $('.details').children[1].lastElementChild.innerText = pokemon.weight + 'KG'
+    $('.details').children[2].lastElementChild.innerText = pokemon.abilities.join(' - ')
   }
 
   /**
    *
-   * @param {object} container the element container for the buttons
+   * @param {Object[]} stats Array of objects with the name and base_stat of stat
    */
 
-  cleanElement (container) {
-    while (container.firstChild) {
-      container.removeChild(container.firstChild)
+  showStats (stats) {
+    const $ = selector => document.querySelectorAll(selector)
+    const bars = $('.inside')
+    const bases = $('.base')
+    for (let i = 0; i < stats.length; i++) {
+      const { name, value } = stats[i]
+      bases[i].innerText = stats[i].value
+      bars[i].setAttribute('style', `width: ${this.getStatWidth(name, value)}`)
     }
   }
 
-  /**
-   *
-   * @param {number} score the final score
-   */
-
-  showScore (score) {
-    const quizzEndHTML = `
-      <h1>Result</h1>
-      <h2>Your score: ${score}</h2>
-    `
-    const element = document.getElementById('quizz')
-    element.innerHTML = quizzEndHTML
+  getStatWidth (name, value) {
+    const maxStats = {
+      hp: 255,
+      attack: 190,
+      defense: 250,
+      'special-attack': 194,
+      'special-defense': 250,
+      speed: 200
+    }
+    return (value / maxStats[name]) * 100 + '%'
   }
 
   /**
    *
-   * @param {number} currentIndex the current index of the quizz
-   * @param {number} total the total number of questions
+   * @param {numb} id Number id of pokemon
    */
 
-  showProgress (currentIndex, total) {
-    const element = document.getElementById('progress')
+  showId (id) {
+    const numberLength = id.toString().length
+    if (numberLength < 3) id = '0'.repeat(3 - numberLength) + id
 
-    element.innerText = `Question ${currentIndex} of ${total}`
+    document.querySelector('.number').innerText = `#${id}`
+  }
+
+  /**
+   *
+   * @param {Pokemon} pokemon  Pokemon object
+   */
+
+  showNextArrow (pokemon) {
+    pokemon.isLastPokemon()
+      ? document.querySelector('.next').style.display = 'none'
+      : document.querySelector('.next').style.display = 'block'
+  }
+
+  showBackArrow (pokemon) {
+    pokemon.isFirstPokemon()
+      ? document.querySelector('.back').style.display = 'none'
+      : document.querySelector('.back').style.display = 'block'
+  }
+
+  /**
+   *
+   * @param {Pokemon} pokemon Pokemon Object
+   */
+
+  renderPokedex (pokemon) {
+    this.showBackArrow(pokemon)
+    this.showNextArrow(pokemon)
+    this.showPicture(pokemon.img, pokemon.name)
+    this.showSubGrid(pokemon)
+    this.showStats(pokemon.stats)
+    this.showId(pokemon.id)
   }
 }
