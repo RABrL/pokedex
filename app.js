@@ -1,38 +1,34 @@
-import { getPokemon } from './data/data.js'
+import { getAllPokemons, getPokemon } from './data/data.js'
 import UI from './models/UI.js'
 
-let actualPokemon
-
 document.addEventListener('DOMContentLoaded', async () => {
-  const ui = new UI()
-  await getAllPokemons(ui)
-  const nav = document.querySelectorAll('.list span')
+  const $ = selector => document.querySelector(selector)
 
+  const ui = new UI()
+  const allPokemons = await getAllPokemons()
+  ui.fillNav(allPokemons)
+  ui.fillInput(allPokemons)
+  let pokemon = await getPokemon('bulbasaur')
+  ui.renderPokedex(pokemon)
+
+  const nav = document.querySelectorAll('.list span')
   nav.forEach(span => {
     span.addEventListener('click', async () => {
-      actualPokemon = await getPokemon(span.id)
-      ui.showPicture(actualPokemon.img, actualPokemon.name)
+      pokemon = await getPokemon(span.textContent)
+      ui.renderPokedex(pokemon)
     })
   })
+
+  const next = $('.next')
+  const back = $('.back')
+
+  next.addEventListener('click', async () => {
+    const nextPokemon = await getPokemon(pokemon.nextPokemon(allPokemons))
+    ui.renderPokedex(nextPokemon)
+  })
+
+  back.addEventListener('click', async () => {
+    const backPokemon = await getPokemon(pokemon.backPokemon(allPokemons))
+    ui.renderPokedex(backPokemon)
+  })
 })
-
-async function getAllPokemons (ui) {
-  const pokemons = await fetch('https://pokeapi.co/api/v2/pokemon?offset=0&limit=1279')
-    .then(res => res.json())
-    .then(data => {
-      return data.results.map(({ name }, id) => {
-        return { name, id }
-      })
-    })
-  ui.fillNav(pokemons)
-  ui.fillInput(pokemons)
-}
-
-async function renderPokemon (ui) {
-}
-
-function main () {
-  const ui = new UI()
-  renderPokemon(ui)
-}
-main()
