@@ -1,5 +1,6 @@
 // @ts-check
 export default class Pokemon {
+  actualPokemon
   /**
    *
    * @param {number} id Id number of pokemon
@@ -22,24 +23,37 @@ export default class Pokemon {
     this.img = img
   }
 
-  /**
-   *
-   * @param {string} answer the answer chosen by the player
-   */
-
-  guess (answer) {
-    if (this.getQuestion().correctAnswer(answer)) {
-      this.score++
-    }
-    this.questionIndex++
+  setActualPokemon (name) {
+    this.actualPokemon = name
   }
 
   /**
    *
-   * @returns {boolean} Return true or false
+   * @param {String[]} allPokemons array of all name's pokemons
    */
 
-  isEnded () {
-    return this.questions.length === this.questionIndex
+  nextPokemon (allPokemons) {
+    const index = allPokemons.indexOf(this.actualPokemon) + 1
+    this.setActualPokemon(allPokemons[index])
+    return allPokemons[index]
+  }
+
+  /**
+   *
+   * @param {String[]} allPokemons array of all name's pokemons
+   */
+
+  backPokemon (allPokemons) {
+    const index = allPokemons.indexOf(this.actualPokemon) - 1
+    this.setActualPokemon(allPokemons[index])
+    return allPokemons[index]
+  }
+
+  isLastPokemon () {
+    return this.id === 10271
+  }
+
+  isFirstPokemon () {
+    return this.id === 1
   }
 }
